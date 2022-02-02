@@ -1,0 +1,1 @@
+Analyzes solution for Nerdle @ https://nerdlegame.com
