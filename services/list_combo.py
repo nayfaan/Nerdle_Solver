@@ -3,8 +3,7 @@ from itertools import *
 
 import re
 
-def run(sol_string):
-    length = 8
+def run(sol_string = "", length = 8):
     for x in sol_string:
         if x not in "1234567890+-*/=":
             raise ValueError("Wrong string input.")
@@ -32,8 +31,14 @@ def run(sol_string):
             all_perm_consecutive_symbols_removed.append(perm)
     for i, perm in enumerate(all_perm_consecutive_symbols_removed):
         all_perm_consecutive_symbols_removed[i] = re.sub('=','==',"".join(perm))
+    
+    #Rule #4: Also, the number on the right of the “=” is just a number (not another calculation)
+    all_perm_second_calc_removed = []
+    for perm in all_perm_consecutive_symbols_removed:
+        if not any(item in "".join(perm.split("=")[1:]) for item in "+-*/="):
+            all_perm_second_calc_removed.append(perm)
         
-    for perm in all_perm_consecutive_symbols_removed:     
+    for perm in all_perm_second_calc_removed:     
         try:
             if eval(perm):
                 all_equate.append(re.sub("==","=",perm))
@@ -43,4 +48,4 @@ def run(sol_string):
     return all_equate
 
 if __name__ == "__main__":
-    pass
+    run()
